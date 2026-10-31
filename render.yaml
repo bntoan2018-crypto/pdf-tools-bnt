@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: pdf-tools-public
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: MAX_CONTENT_LENGTH
+        value: 104857600
+      - key: REQUIRE_CAPTCHA
+        value: "true"
+      - key: RATELIMIT_STORAGE_URI
+        value: memory://

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PDF Tools - Công cụ PDF miễn phí: chuyển PDF sang Word, nối PDF, OCR và giữ nguyên bố cục.">
+<meta name="theme-color" content="#ffffff">\n<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<title>PDF Tools – Công cụ xử lý PDF miễn phí</title>
+<style>
+:root{--blue:#245cff;--blue2:#3978ff;--ink:#13213d;--muted:#61718e;--line:#e2eaf6;--bg:#f5f8ff;--green:#eaf8f0;--red:#fff0ef}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#fff}
+a{color:inherit;text-decoration:none}.wrap{width:min(1240px,calc(100% - 40px));margin:auto}
+.topbar{height:72px;display:flex;align-items:center;border-bottom:1px solid #edf1f8;background:#fff;position:sticky;top:0;z-index:10}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:25px;letter-spacing:-.8px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#4d91ff,#174de7);display:grid;place-items:center;color:white;font-weight:900;box-shadow:0 7px 18px #245cff35}
+.navlinks{display:flex;gap:30px;color:#33415d;font-weight:650}.navlinks a:hover{color:var(--blue)}.contact{background:var(--blue);color:white;padding:10px 19px;border-radius:12px;font-weight:700;box-shadow:0 7px 18px #245cff2b}
+.hero{background:radial-gradient(ellipse at 82% 20%,#d9eaff 0,transparent 42%),linear-gradient(110deg,#f5f8ff,#edf5ff 60%,#f7fbff);padding:58px 0 48px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;align-items:center;gap:42px}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#e3edff;color:#245cff;padding:7px 14px;border-radius:30px;font-size:13px;font-weight:750}
+h1{font-size:clamp(38px,4.3vw,58px);line-height:1.06;letter-spacing:-2.2px;margin:18px 0 16px;font-weight:850}.gradient{color:var(--blue)}.lead{font-size:18px;color:#586987;max-width:640px;margin:0 0 25px}
+.benefits{display:flex;flex-wrap:wrap;gap:20px 26px;margin-top:27px}.benefit{display:flex;gap:10px;align-items:center;font-size:13px;color:#53627e}.benefit b{display:block;color:#182743;font-size:14px}.ico{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;color:white;font-size:19px;background:linear-gradient(145deg,#39a7ff,#245cff)}
+.upload-card{background:#fff;border:1px solid #e9eff9;border-radius:22px;padding:18px;box-shadow:0 18px 55px #315ca51b}
+.drop{display:flex;min-height:300px;align-items:center;justify-content:center;flex-direction:column;text-align:center;border:2px dashed #9db7ff;border-radius:16px;background:linear-gradient(180deg,#fcfdff,#f8fbff);padding:24px;cursor:pointer;transition:.2s}
+.drop.dragover{background:#eaf1ff;border-color:var(--blue);transform:scale(1.01)}.file-art{font-size:53px;line-height:1.2;margin-bottom:10px}.drop strong{font-size:18px}.drop span{color:var(--muted);margin-top:5px}.upload-btn{margin-top:17px;border:0;border-radius:12px;background:linear-gradient(100deg,#3679ff,#245cff);color:#fff;font-weight:800;font-size:16px;padding:14px 35px;min-width:250px;cursor:pointer;box-shadow:0 9px 22px #245cff35}
+.small{font-size:12px;color:#71809a;margin-top:10px}.tool-section{padding:48px 0 25px}.section-head{text-align:center;margin-bottom:27px}.section-head h2{font-size:29px;letter-spacing:-.7px;margin:0 0 5px}.section-head p{color:var(--muted);margin:0}
+.tools{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}.tool{border:1px solid var(--line);border-radius:15px;padding:17px 14px;display:flex;gap:13px;align-items:center;background:white;box-shadow:0 5px 18px #19365d08;cursor:pointer;text-align:left;transition:.18s}.tool:hover{transform:translateY(-3px);border-color:#b9ccff;box-shadow:0 10px 25px #245cff12}.tool-icon{width:48px;height:48px;flex:none;border-radius:14px;display:grid;place-items:center;color:white;font-size:23px;font-weight:800;background:#397cff}.tool b{display:block;font-size:14px}.tool small{display:block;color:#71809a;line-height:1.35;margin-top:3px;font-size:12px}
+.workspace{padding:25px 0 48px;scroll-margin-top:85px}.tabs{display:flex;gap:8px;margin-bottom:15px}.tab{border:1px solid var(--line);background:white;color:#33415d;padding:10px 17px;border-radius:10px;font-weight:750;cursor:pointer}.tab.active{background:var(--blue);border-color:var(--blue);color:white}
+.panel{display:none;border:1px solid var(--line);border-radius:18px;padding:25px;background:#fff;box-shadow:0 12px 35px #17213d0a}.panel.active{display:block}.panel h2{font-size:22px;margin:0 0 4px}.desc{color:var(--muted);margin:0 0 18px}
+.panel .drop{min-height:170px}.panel .file-art{font-size:34px}.panel .upload-btn{min-width:190px;font-size:14px;padding:11px 20px}.filelist{padding:0;list-style:none;margin:14px 0}.file{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:11px;padding:11px;margin-top:8px}.name{flex:1;overflow-wrap:anywhere}.name small{display:block;color:var(--muted)}.move{display:flex;gap:5px}.move button{border:1px solid var(--line);background:#f8fafc;border-radius:7px;padding:5px 10px;cursor:pointer}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:750;cursor:pointer;background:var(--blue);color:white}.btn.secondary{background:#edf2fa;color:#263854}.btn:disabled{opacity:.48;cursor:not-allowed}input[type=file]{display:none}
+.status{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f5fb;padding:12px;border-radius:10px;margin-top:14px;color:#34445f}.status.ok{background:var(--green);color:#12633d}.status.err{background:var(--red);color:#a5261d}.hint{font-size:13px;color:var(--muted);margin-top:12px}
+.captcha-wrap{margin-top:14px;display:flex;justify-content:flex-start}.trust{margin:0 0 48px;padding:20px 24px;border-radius:16px;background:#f1f6ff;display:flex;gap:15px;align-items:center}.trust-icon{font-size:26px}.trust b{display:block;color:#174edb}.trust p{margin:2px 0 0;color:#596b89;font-size:13px}
+.footer{background:#101d38;color:#d7e1f4;padding:28px 0}.footer-grid{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.footer-brand{font-size:19px;font-weight:850;color:white}.footer small{color:#aebbd2}.contact-info{display:flex;gap:24px;flex-wrap:wrap;font-size:13px}.footer a:hover{color:white}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr 1fr;gap:22px}.tools{grid-template-columns:repeat(3,1fr)}.navlinks{gap:15px}}
+@media(max-width:680px){.wrap{width:min(100% - 28px,540px)}.topbar{height:auto;padding:12px 0}.navlinks{display:none}.hero{padding:35px 0}.hero-grid{grid-template-columns:1fr}.hero-copy{text-align:center}.lead{font-size:16px}.benefits{justify-content:center}.upload-card{padding:12px}.drop{min-height:235px}.tools{grid-template-columns:1fr 1fr}.tool{padding:12px 10px;gap:9px}.tool-icon{width:40px;height:40px}.section-head h2{font-size:24px}.panel{padding:16px}.tabs{flex-wrap:wrap}.footer-grid{align-items:flex-start;flex-direction:column}.contact-info{gap:10px;flex-direction:column}}
+@media(max-width:390px){.tools{grid-template-columns:1fr}.benefits{gap:12px}.upload-btn{min-width:0;width:100%}}
+</style></head>
+<body>
+<header class="topbar"><div class="wrap nav">
+<a class="brand" href="#"><span class="logo">▤</span><span><span class="gradient">PDF</span> Tools</span></a>
+<nav class="navlinks"><a href="#">Trang chủ</a><a href="#tools">Tất cả công cụ</a><a href="#workspace">Hướng dẫn</a><a href="#footer">Giới thiệu</a></nav>
+<a class="contact" href="mailto:bntoan2018@gmail.com">Liên hệ</a>
+</div></header>
+<section class="hero"><div class="wrap hero-grid">
+<div class="hero-copy">
+<div class="eyebrow">✦ Miễn phí · Nhanh chóng · Dễ sử dụng</div>
+<h1>Công cụ xử lý PDF<br><span class="gradient">miễn phí cho mọi người</span></h1>
+<p class="lead">Chuyển đổi, nối và xử lý tài liệu PDF nhanh chóng. Giao diện đơn giản, dễ sử dụng trên máy tính, điện thoại và máy tính bảng.</p>
+<div class="benefits">
+<div class="benefit"><span class="ico">⬡</span><span><b>Ưu tiên bảo mật</b>File tạm thời, tự động xóa</span></div>
+<div class="benefit"><span class="ico">ϟ</span><span><b>Xử lý nhanh</b>Thao tác chỉ vài bước</span></div>
+<div class="benefit"><span class="ico">▣</span><span><b>Mọi thiết bị</b>Máy tính và điện thoại</span></div>
+</div></div>
+<div class="upload-card"><label class="drop" id="heroDrop" for="convertFile"><div class="file-art">📄 <span style="color:#3679ff">↗</span> 📝</div><strong>Kéo và thả file PDF của bạn vào đây</strong><span>hoặc nhấn nút bên dưới để chọn file</span><span class="upload-btn">⇧ &nbsp; Chọn file PDF</span><span class="small">Hỗ trợ PDF · Dung lượng tối đa 100 MB</span></label></div>
+</div></section>
+<section class="tool-section" id="tools"><div class="wrap">
+<div class="section-head"><h2>Các công cụ PDF phổ biến</h2><p>Các công cụ cần thiết để xử lý tài liệu PDF thuận tiện và miễn phí.</p></div>
+<div class="tools">
+<button class="tool" data-open="convert"><span class="tool-icon">W</span><span><b>PDF sang Word</b><small>Chuyển PDF thành Word có thể chỉnh sửa</small></span></button>
+<button class="tool" data-open="merge"><span class="tool-icon" style="background:#ef5555">▤</span><span><b>Nối PDF</b><small>Gộp nhiều file PDF thành một file</small></span></button>
+<button class="tool" data-open="convert"><span class="tool-icon" style="background:#19ad72">⇩</span><span><b>OCR PDF scan</b><small>Nhận dạng văn bản từ PDF scan</small></span></button>
+<button class="tool" data-open="convert"><span class="tool-icon" style="background:#9255ed">▧</span><span><b>Giữ nguyên bố cục</b><small>Tạo Word với trang dạng hình ảnh</small></span></button>
+<button class="tool" data-open="merge"><span class="tool-icon" style="background:#f28b26">＋</span><span><b>Sắp xếp & nối</b><small>Đổi thứ tự file trước khi nối</small></span></button>
+</div></div></section>
+<section class="workspace" id="workspace"><div class="wrap">
+<div class="tabs"><button class="tab active" data-panel="convert">PDF → Word</button><button class="tab" data-panel="merge">Nối PDF</button></div>
+<section class="panel active" id="convert">
+<h2>Chuyển PDF sang Word</h2><p class="desc">Chọn chế độ phù hợp với tài liệu. PDF nhiều sơ đồ, hình ảnh hoặc công thức nên dùng chế độ giữ bố cục.</p>
+<label class="drop" id="convertDrop" for="convertFile"><div class="file-art">📄</div><strong>Kéo thả hoặc chọn một file PDF</strong><span>Chọn tài liệu từ thiết bị của bạn</span><span class="upload-btn">Chọn file PDF</span></label><input id="convertFile" type="file" accept=".pdf,application/pdf">
+<div id="convertInfo" class="hint">Chưa chọn file.</div><div class="captcha-wrap"><div id="turnstile-widget"></div></div><div class="hint" id="captchaHint">Vui lòng xác minh trước khi xử lý file.</div>
+<div class="actions"><button class="btn" id="convertBtn" disabled>Word có thể chỉnh sửa</button><button class="btn secondary" id="hybridBtn" disabled>Kết hợp giữ bố cục</button><button class="btn secondary" id="ocrBtn" disabled>OCR PDF scan</button><button class="btn secondary" id="visualBtn" disabled>Word giữ nguyên hình ảnh</button><button class="btn secondary" id="clearConvert">Xóa lựa chọn</button></div>
+<div class="status" id="convertStatus">Đang kết nối máy chủ…</div>
+<p class="hint" id="ocrHint">OCR phụ thuộc vào cấu hình máy chủ. Kết quả chuyển đổi cần được kiểm tra lại đối với tài liệu có bố cục phức tạp.</p>
+</section>
+<section class="panel" id="merge">
+<h2>Nối nhiều file PDF</h2><p class="desc">Chọn nhiều file, kéo thả để sắp xếp thứ tự hoặc dùng nút mũi tên, sau đó nối thành một PDF.</p>
+<label class="drop" id="mergeDrop" for="mergeFiles"><div class="file-art">📚</div><strong>Kéo thả nhiều file PDF vào đây</strong><span>Hoặc nhấn để chọn nhiều file cùng lúc</span><span class="upload-btn">Chọn nhiều file PDF</span></label><input id="mergeFiles" type="file" accept=".pdf,application/pdf" multiple>
+<ul id="fileList" class="filelist"></ul>
+<div class="captcha-wrap"><div id="turnstile-widget-merge"></div></div><div class="actions"><button class="btn" id="mergeBtn" disabled>Nối và tải PDF</button><button class="btn secondary" id="clearMerge">Xóa danh sách</button></div>
+<div class="status" id="mergeStatus">Chưa có file nào được chọn.</div>
+</section>
+</div></section>
+<div class="wrap"><div class="trust"><span class="trust-icon">🔒</span><div><b>Cam kết bảo mật</b><p>File được xử lý tạm thời trên máy chủ để tạo kết quả và tự động xóa sau khi gửi file hoàn tất. Vui lòng không tải lên tài liệu mật hoặc dữ liệu nhạy cảm.</p></div></div></div>
+<footer class="footer" id="footer"><div class="wrap footer-grid"><div><div class="footer-brand"><span class="gradient">PDF</span> Tools</div><small>Công cụ xử lý tài liệu PDF trực tuyến</small></div><div class="contact-info"><span>Người tạo: <b>Bùi Ngọc Toàn</b></span><span>☎ 0904016586</span><span>✉ <a href="mailto:bntoan2018@gmail.com">bntoan2018@gmail.com</a></span></div><small><a href="/privacy.html">Chính sách quyền riêng tư</a> · <a href="/terms.html">Điều khoản sử dụng</a><br>© 2026 PDF Tools. All rights reserved.</small></div></footer>
+<script>
+const $=id=>document.getElementById(id);let selectedConvert=null, mergeList=[];
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.panel));});
+function status(id,msg,cls=''){const el=$(id);el.textContent=msg;el.className='status '+cls}
+function size(n){return n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(2)+' MB'}
+function downloadResponse(blob,filename){const a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
+function baseName(n){return n.replace(/\.pdf$/i,'').replace(/[\\/:*?"<>|]+/g,'_')||'document'}
+async function getError(res){try{const j=await res.json();return j.error+(j.detail?'\n'+j.detail:'')}catch{return 'Lỗi máy chủ cục bộ ('+res.status+').'}}
+fetch('/api/health').then(r=>r.json()).then(j=>{status('convertStatus','Dịch vụ trực tuyến sẵn sàng. Bộ chuyển đổi: '+j.engine,'ok');document.getElementById('ocrBtn').disabled=!j.ocr_available;document.getElementById('ocrHint').textContent=j.ocr_available?'OCR đã sẵn sàng.':'OCR hiện chưa được bật trên máy chủ.'}).catch(()=>{status('convertStatus','Không kết nối được máy chủ. Vui lòng tải lại trang sau ít phút.','err')});
+$('convertFile').onchange=e=>{selectedConvert=e.target.files[0]||null;$('convertInfo').textContent=selectedConvert?selectedConvert.name+' · '+size(selectedConvert.size):'Chưa chọn file.';$('convertBtn').disabled=!selectedConvert;$('ocrBtn').disabled=!selectedConvert;$('visualBtn').disabled=!selectedConvert;$('hybridBtn').disabled=!selectedConvert;status('convertStatus',selectedConvert?'Đã chọn file. Sẵn sàng chuyển đổi.':'Chưa chọn file.');};
+
+async function runConversion(endpoint, suffix, buttonId, startText, successText){
+  if(!selectedConvert)return;
+  const b=$(buttonId);
+  const buttons=[$('convertBtn'),$('hybridBtn'),$('ocrBtn'),$('visualBtn')];
+  buttons.forEach(x=>x.disabled=true);
+  const old=b.textContent;b.textContent=startText;
+  status('convertStatus','Đang xử lý an toàn trên máy chủ. Với PDF dài hoặc scan, vui lòng chờ…');
+  try{
+    const fd=new FormData();fd.append('file',selectedConvert);
+    const r=await fetch(endpoint,{method:'POST',body:fd});
+    if(!r.ok)throw new Error(await getError(r));
+    const blob=await r.blob();
+    const rawWarning=r.headers.get('X-PDF-Tools-Warning');let warning=rawWarning;try{if(rawWarning)warning=decodeURIComponent(rawWarning)}catch{}
+    downloadResponse(blob,baseName(selectedConvert.name)+suffix);
+    status('convertStatus',successText+(warning?'\nLưu ý: '+warning:''),'ok');
+  }catch(e){status('convertStatus','Không chuyển đổi được: '+e.message,'err')}
+  finally{b.textContent=old;buttons.forEach(x=>x.disabled=!selectedConvert)}
+}
+
+$('hybridBtn').onclick=()=>runConversion('/api/convert_hybrid','_hybrid.docx','hybridBtn','Đang phân tích từng trang…','Chuyển đổi kết hợp hoàn tất. Trang bố cục phức tạp có thể được giữ dạng ảnh; chỉ các trang đơn giản được chuyển thành nội dung Word chỉnh sửa được.');
+$('ocrBtn').onclick=()=>runConversion('/api/convert_ocr','_OCR.docx','ocrBtn','Đang OCR…','OCR hoàn tất. Hãy kiểm tra lại chữ nhận dạng và bố cục.');
+$('visualBtn').onclick=()=>runConversion('/api/convert_visual','_giu_nguyen_hinh_anh.docx','visualBtn','Đang tạo Word dạng ảnh…','Đã tạo Word giữ nguyên hình thức trang. Nội dung trang là ảnh, không sửa được như văn bản.');
+
+$('clearConvert').onclick=()=>{selectedConvert=null;$('convertFile').value='';$('convertInfo').textContent='Chưa chọn file.';$('convertBtn').disabled=true;$('ocrBtn').disabled=true;$('visualBtn').disabled=true;$('hybridBtn').disabled=true;status('convertStatus','Đã xóa lựa chọn.');};
+$('convertBtn').onclick=async()=>{if(!selectedConvert)return;const b=$('convertBtn');b.disabled=true;b.textContent='Đang chuyển đổi…';status('convertStatus','Đang xử lý an toàn trên máy chủ. Với file lớn, vui lòng chờ…');try{const fd=new FormData();fd.append('file',selectedConvert);fd.append('cf-turnstile-response',getCaptchaToken());const r=await fetch('/api/convert',{method:'POST',body:fd});resetCaptcha();if(!r.ok)throw new Error(await getError(r));downloadResponse(await r.blob(),baseName(selectedConvert.name)+'.docx');status('convertStatus','Chuyển đổi hoàn tất. Hãy mở file Word và kiểm tra lại bảng, hình ảnh, ngắt trang.','ok')}catch(e){status('convertStatus','Không chuyển đổi được: '+e.message,'err')}finally{b.disabled=!selectedConvert;b.textContent='Chuyển sang Word (.docx)'}};
+function renderFiles(){const ul=$('fileList');ul.innerHTML='';mergeList.forEach((f,i)=>{const li=document.createElement('li');li.className='file';const nm=document.createElement('div');nm.className='name';nm.textContent=f.name;const sm=document.createElement('small');sm.textContent=size(f.size)+' · Vị trí '+(i+1);nm.appendChild(sm);const mv=document.createElement('div');mv.className='move';[['↑',i===0,()=>{[mergeList[i-1],mergeList[i]]=[mergeList[i],mergeList[i-1]];renderFiles()}],['↓',i===mergeList.length-1,()=>{[mergeList[i+1],mergeList[i]]=[mergeList[i],mergeList[i+1]];renderFiles()}],['×',false,()=>{mergeList.splice(i,1);renderFiles()}]].forEach(([txt,disabled,fn])=>{const b=document.createElement('button');b.textContent=txt;b.disabled=disabled;b.onclick=fn;mv.appendChild(b)});li.append(nm,mv);ul.appendChild(li)});$('mergeBtn').disabled=mergeList.length<2}
+$('mergeFiles').onchange=e=>{Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.pdf')).forEach(f=>{if(!mergeList.some(x=>x.name===f.name&&x.size===f.size&&x.lastModified===f.lastModified))mergeList.push(f)});e.target.value='';renderFiles();status('mergeStatus',mergeList.length?'Đã chọn '+mergeList.length+' file. Sắp xếp thứ tự rồi nối.':'Chưa có file PDF hợp lệ.')};
+$('clearMerge').onclick=()=>{mergeList=[];renderFiles();status('mergeStatus','Đã xóa danh sách.')};
+$('mergeBtn').onclick=async()=>{if(mergeList.length<2)return;const b=$('mergeBtn');b.disabled=true;b.textContent='Đang nối…';try{const fd=new FormData();mergeList.forEach(f=>fd.append('files',f));fd.append('cf-turnstile-response',getCaptchaToken());const r=await fetch('/api/merge',{method:'POST',body:fd});resetCaptcha();if(!r.ok)throw new Error(await getError(r));downloadResponse(await r.blob(),'PDF_merged.pdf');status('mergeStatus','Đã nối thành công '+mergeList.length+' file PDF.','ok')}catch(e){status('mergeStatus','Không nối được file: '+e.message,'err')}finally{b.disabled=mergeList.length<2;b.textContent='Nối và tải PDF'}};
+
+// Hero and workspace drag-and-drop support.
+function setupDrop(id, onFiles) {
+ const el=document.getElementById(id); if(!el)return;
+ ['dragenter','dragover'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();el.classList.add('dragover')}));
+ ['dragleave','drop'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();el.classList.remove('dragover')}));
+ el.addEventListener('drop',e=>onFiles(Array.from(e.dataTransfer.files||[])));
+}
+function chooseConvert(files){const f=files.find(x=>x.name.toLowerCase().endsWith('.pdf'));if(!f)return;const dt=new DataTransfer();dt.items.add(f);$('convertFile').files=dt.files;$('convertFile').dispatchEvent(new Event('change'));}
+function chooseMerge(files){const valid=files.filter(x=>x.name.toLowerCase().endsWith('.pdf'));valid.forEach(f=>{if(!mergeList.some(x=>x.name===f.name&&x.size===f.size&&x.lastModified===f.lastModified))mergeList.push(f)});renderFiles();status('mergeStatus',mergeList.length?'Đã chọn '+mergeList.length+' file. Sắp xếp thứ tự rồi nối.':'Chưa có file PDF hợp lệ.');}
+setupDrop('heroDrop',chooseConvert);setupDrop('convertDrop',chooseConvert);setupDrop('mergeDrop',chooseMerge);
+document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const tab=document.querySelector('.tab[data-panel="'+b.dataset.open+'"]');if(tab)tab.click();document.getElementById('workspace').scrollIntoView({behavior:'smooth'});}));
+
+let turnstileToken='';
+function getCaptchaToken(){return turnstileToken;}
+function resetCaptcha(){turnstileToken='';if(window.turnstile){['turnstile-widget','turnstile-widget-merge'].forEach(id=>{const el=$(id);if(el&&el.dataset.rendered){try{window.turnstile.reset(el)}catch(e){}}});}}
+async function initCaptcha(){
+ try{
+  const cfg=await fetch('/api/config').then(r=>r.json());
+  if(!cfg.turnstile_site_key){$('captchaHint').textContent='CAPTCHA chưa cấu hình trên máy chủ; chức năng xử lý đang được khóa để bảo vệ website.';return;}
+  const render=()=>{
+   if(!window.turnstile)return setTimeout(render,250);
+   ['turnstile-widget','turnstile-widget-merge'].forEach(id=>{
+    const el=$(id);if(el&&!el.dataset.rendered){window.turnstile.render(el,{sitekey:cfg.turnstile_site_key,callback:t=>{turnstileToken=t;$('captchaHint').textContent='Đã xác minh. Token có thời hạn ngắn; hãy xác minh lại nếu cần.';},'expired-callback':()=>{turnstileToken='';$('captchaHint').textContent='Xác minh đã hết hạn. Vui lòng xác minh lại.';},'error-callback':()=>{turnstileToken='';}});el.dataset.rendered='1';}
+   });
+  };render();
+ }catch(e){$('captchaHint').textContent='Không tải được CAPTCHA. Vui lòng tải lại trang.';}
+}
+initCaptcha();
+</script></body></html>

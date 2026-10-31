@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="PDF Tools - Công cụ PDF miễn phí: chuyển PDF sang Word, nối PDF, OCR và giữ nguyên bố cục.">
-<meta name="theme-color" content="#ffffff">\n<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<meta name="theme-color" content="#ffffff">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <title>PDF Tools – Công cụ xử lý PDF miễn phí</title>
 <style>
 :root{--blue:#245cff;--blue2:#3978ff;--ink:#13213d;--muted:#61718e;--line:#e2eaf6;--bg:#f5f8ff;--green:#eaf8f0;--red:#fff0ef}
@@ -18,7 +19,7 @@ h1{font-size:clamp(38px,4.3vw,58px);line-height:1.06;letter-spacing:-2.2px;margi
 .benefits{display:flex;flex-wrap:wrap;gap:20px 26px;margin-top:27px}.benefit{display:flex;gap:10px;align-items:center;font-size:13px;color:#53627e}.benefit b{display:block;color:#182743;font-size:14px}.ico{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;color:white;font-size:19px;background:linear-gradient(145deg,#39a7ff,#245cff)}
 .upload-card{background:#fff;border:1px solid #e9eff9;border-radius:22px;padding:18px;box-shadow:0 18px 55px #315ca51b}
 .drop{display:flex;min-height:300px;align-items:center;justify-content:center;flex-direction:column;text-align:center;border:2px dashed #9db7ff;border-radius:16px;background:linear-gradient(180deg,#fcfdff,#f8fbff);padding:24px;cursor:pointer;transition:.2s}
-.drop.dragover{background:#eaf1ff;border-color:var(--blue);transform:scale(1.01)}.file-art{font-size:53px;line-height:1.2;margin-bottom:10px}.drop strong{font-size:18px}.drop span{color:var(--muted);margin-top:5px}.upload-btn{margin-top:17px;border:0;border-radius:12px;background:linear-gradient(100deg,#3679ff,#245cff);color:#fff;font-weight:800;font-size:16px;padding:14px 35px;min-width:250px;cursor:pointer;box-shadow:0 9px 22px #245cff35}
+.drop.dragover{background:#eaf1ff;border-color:var(--blue);transform:scale(1.01);box-shadow:0 0 0 4px #245cff18}.drop-feedback{display:block!important;margin-top:12px!important;font-size:13px;font-weight:700;color:#61718e}.drop-feedback.success{color:#16834a}.drop-feedback.error{color:#c62828}.drop.dragover .drop-feedback{color:var(--blue)}.file-art{font-size:53px;line-height:1.2;margin-bottom:10px}.drop strong{font-size:18px}.drop span{color:var(--muted);margin-top:5px}.upload-btn{margin-top:17px;border:0;border-radius:12px;background:linear-gradient(100deg,#3679ff,#245cff);color:#fff;font-weight:800;font-size:16px;padding:14px 35px;min-width:250px;cursor:pointer;box-shadow:0 9px 22px #245cff35}
 .small{font-size:12px;color:#71809a;margin-top:10px}.tool-section{padding:48px 0 25px}.section-head{text-align:center;margin-bottom:27px}.section-head h2{font-size:29px;letter-spacing:-.7px;margin:0 0 5px}.section-head p{color:var(--muted);margin:0}
 .tools{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}.tool{border:1px solid var(--line);border-radius:15px;padding:17px 14px;display:flex;gap:13px;align-items:center;background:white;box-shadow:0 5px 18px #19365d08;cursor:pointer;text-align:left;transition:.18s}.tool:hover{transform:translateY(-3px);border-color:#b9ccff;box-shadow:0 10px 25px #245cff12}.tool-icon{width:48px;height:48px;flex:none;border-radius:14px;display:grid;place-items:center;color:white;font-size:23px;font-weight:800;background:#397cff}.tool b{display:block;font-size:14px}.tool small{display:block;color:#71809a;line-height:1.35;margin-top:3px;font-size:12px}
 .workspace{padding:25px 0 48px;scroll-margin-top:85px}.tabs{display:flex;gap:8px;margin-bottom:15px}.tab{border:1px solid var(--line);background:white;color:#33415d;padding:10px 17px;border-radius:10px;font-weight:750;cursor:pointer}.tab.active{background:var(--blue);border-color:var(--blue);color:white}
@@ -48,7 +49,7 @@ h1{font-size:clamp(38px,4.3vw,58px);line-height:1.06;letter-spacing:-2.2px;margi
 <div class="benefit"><span class="ico">ϟ</span><span><b>Xử lý nhanh</b>Thao tác chỉ vài bước</span></div>
 <div class="benefit"><span class="ico">▣</span><span><b>Mọi thiết bị</b>Máy tính và điện thoại</span></div>
 </div></div>
-<div class="upload-card"><label class="drop" id="heroDrop" for="convertFile"><div class="file-art">📄 <span style="color:#3679ff">↗</span> 📝</div><strong>Kéo và thả file PDF của bạn vào đây</strong><span>hoặc nhấn nút bên dưới để chọn file</span><span class="upload-btn">⇧ &nbsp; Chọn file PDF</span><span class="small">Hỗ trợ PDF · Dung lượng tối đa 100 MB</span></label></div>
+<div class="upload-card"><label class="drop" id="heroDrop" for="convertFile"><div class="file-art">📄 <span style="color:#3679ff">↗</span> 📝</div><strong>Kéo và thả file PDF của bạn vào đây</strong><span>hoặc nhấn nút bên dưới để chọn file</span><span class="upload-btn">⇧ &nbsp; Chọn file PDF</span><span class="small">Hỗ trợ PDF · Dung lượng tối đa 100 MB</span><span id="heroDropInfo" class="drop-feedback" aria-live="polite">Chưa có file được chọn</span></label></div>
 </div></section>
 <section class="tool-section" id="tools"><div class="wrap">
 <div class="section-head"><h2>Các công cụ PDF phổ biến</h2><p>Các công cụ cần thiết để xử lý tài liệu PDF thuận tiện và miễn phí.</p></div>
@@ -88,7 +89,8 @@ function downloadResponse(blob,filename){const a=document.createElement('a'),u=U
 function baseName(n){return n.replace(/\.pdf$/i,'').replace(/[\\/:*?"<>|]+/g,'_')||'document'}
 async function getError(res){try{const j=await res.json();return j.error+(j.detail?'\n'+j.detail:'')}catch{return 'Lỗi máy chủ cục bộ ('+res.status+').'}}
 fetch('/api/health').then(r=>r.json()).then(j=>{status('convertStatus','Dịch vụ trực tuyến sẵn sàng. Bộ chuyển đổi: '+j.engine,'ok');document.getElementById('ocrBtn').disabled=!j.ocr_available;document.getElementById('ocrHint').textContent=j.ocr_available?'OCR đã sẵn sàng.':'OCR hiện chưa được bật trên máy chủ.'}).catch(()=>{status('convertStatus','Không kết nối được máy chủ. Vui lòng tải lại trang sau ít phút.','err')});
-$('convertFile').onchange=e=>{selectedConvert=e.target.files[0]||null;$('convertInfo').textContent=selectedConvert?selectedConvert.name+' · '+size(selectedConvert.size):'Chưa chọn file.';$('convertBtn').disabled=!selectedConvert;$('ocrBtn').disabled=!selectedConvert;$('visualBtn').disabled=!selectedConvert;$('hybridBtn').disabled=!selectedConvert;status('convertStatus',selectedConvert?'Đã chọn file. Sẵn sàng chuyển đổi.':'Chưa chọn file.');};
+function updateHeroDropInfo(message,kind='') {const el=$('heroDropInfo');if(!el)return;el.textContent=message;el.className='drop-feedback'+(kind?' '+kind:'');}
+$('convertFile').onchange=e=>{selectedConvert=e.target.files[0]||null;$('convertInfo').textContent=selectedConvert?selectedConvert.name+' · '+size(selectedConvert.size):'Chưa chọn file.';$('convertBtn').disabled=!selectedConvert;$('ocrBtn').disabled=!selectedConvert;$('visualBtn').disabled=!selectedConvert;$('hybridBtn').disabled=!selectedConvert;if(selectedConvert){updateHeroDropInfo('✓ Đã chọn: '+selectedConvert.name+' · '+size(selectedConvert.size),'success');status('convertStatus','Đã chọn file. Sẵn sàng chuyển đổi.');}else{updateHeroDropInfo('Chưa có file được chọn');status('convertStatus','Chưa chọn file.');}};
 
 async function runConversion(endpoint, suffix, buttonId, startText, successText){
   if(!selectedConvert)return;
@@ -123,11 +125,29 @@ $('mergeBtn').onclick=async()=>{if(mergeList.length<2)return;const b=$('mergeBtn
 // Hero and workspace drag-and-drop support.
 function setupDrop(id, onFiles) {
  const el=document.getElementById(id); if(!el)return;
- ['dragenter','dragover'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();el.classList.add('dragover')}));
- ['dragleave','drop'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();el.classList.remove('dragover')}));
- el.addEventListener('drop',e=>onFiles(Array.from(e.dataTransfer.files||[])));
+ ['dragenter','dragover'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();el.classList.add('dragover');}));
+ el.addEventListener('dragleave',e=>{e.preventDefault();if(!el.contains(e.relatedTarget))el.classList.remove('dragover');});
+ el.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();el.classList.remove('dragover');onFiles(Array.from(e.dataTransfer.files||[]));});
 }
-function chooseConvert(files){const f=files.find(x=>x.name.toLowerCase().endsWith('.pdf'));if(!f)return;const dt=new DataTransfer();dt.items.add(f);$('convertFile').files=dt.files;$('convertFile').dispatchEvent(new Event('change'));}
+function chooseConvert(files){
+ const f=files[0];
+ if(!f){updateHeroDropInfo('Không nhận được file. Vui lòng thử lại.','error');return;}
+ if(!f.name.toLowerCase().endsWith('.pdf')&&f.type!=='application/pdf'){
+  $('convertFile').value='';selectedConvert=null;
+  ['convertBtn','hybridBtn','ocrBtn','visualBtn'].forEach(id=>$(id).disabled=true);
+  $('convertInfo').textContent='Chưa chọn file.';
+  updateHeroDropInfo('✕ File không hợp lệ. Vui lòng chọn file PDF.','error');
+  status('convertStatus','File không hợp lệ. Vui lòng chọn file PDF.','err');return;
+ }
+ if(f.size>100*1024*1024){
+  $('convertFile').value='';selectedConvert=null;
+  ['convertBtn','hybridBtn','ocrBtn','visualBtn'].forEach(id=>$(id).disabled=true);
+  $('convertInfo').textContent='Chưa chọn file.';
+  updateHeroDropInfo('✕ File vượt quá giới hạn 100 MB.','error');
+  status('convertStatus','File vượt quá giới hạn 100 MB.','err');return;
+ }
+ const dt=new DataTransfer();dt.items.add(f);$('convertFile').files=dt.files;$('convertFile').dispatchEvent(new Event('change'));
+}
 function chooseMerge(files){const valid=files.filter(x=>x.name.toLowerCase().endsWith('.pdf'));valid.forEach(f=>{if(!mergeList.some(x=>x.name===f.name&&x.size===f.size&&x.lastModified===f.lastModified))mergeList.push(f)});renderFiles();status('mergeStatus',mergeList.length?'Đã chọn '+mergeList.length+' file. Sắp xếp thứ tự rồi nối.':'Chưa có file PDF hợp lệ.');}
 setupDrop('heroDrop',chooseConvert);setupDrop('convertDrop',chooseConvert);setupDrop('mergeDrop',chooseMerge);
 document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const tab=document.querySelector('.tab[data-panel="'+b.dataset.open+'"]');if(tab)tab.click();document.getElementById('workspace').scrollIntoView({behavior:'smooth'});}));

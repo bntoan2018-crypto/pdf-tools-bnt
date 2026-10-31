@@ -12,7 +12,7 @@
 a{color:inherit;text-decoration:none}.wrap{width:min(1240px,calc(100% - 40px));margin:auto}
 .topbar{height:72px;display:flex;align-items:center;border-bottom:1px solid #edf1f8;background:#fff;position:sticky;top:0;z-index:10}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:25px;letter-spacing:-.8px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#4d91ff,#174de7);display:grid;place-items:center;color:white;font-weight:900;box-shadow:0 7px 18px #245cff35}
-.navlinks{display:flex;gap:30px;color:#33415d;font-weight:650}.navlinks a:hover{color:var(--blue)}.contact{background:var(--blue);color:white;padding:10px 19px;border-radius:12px;font-weight:700;box-shadow:0 7px 18px #245cff2b}
+.navlinks{display:flex;gap:30px;color:#33415d;font-weight:650}.navlinks a:hover{color:var(--blue)}.contact{background:var(--blue);color:white;padding:10px 19px;border-radius:12px;font-weight:700;box-shadow:0 7px 18px #245cff2b}.lang-toggle{border:1px solid var(--line);background:#fff;color:var(--blue);padding:9px 13px;border-radius:10px;font-weight:800;cursor:pointer;white-space:nowrap}.lang-toggle:hover{background:#edf3ff}
 .hero{background:radial-gradient(ellipse at 82% 20%,#d9eaff 0,transparent 42%),linear-gradient(110deg,#f5f8ff,#edf5ff 60%,#f7fbff);padding:58px 0 48px;overflow:hidden}
 .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;align-items:center;gap:42px}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#e3edff;color:#245cff;padding:7px 14px;border-radius:30px;font-size:13px;font-weight:750}
 h1{font-size:clamp(38px,4.3vw,58px);line-height:1.06;letter-spacing:-2.2px;margin:18px 0 16px;font-weight:850}.gradient{color:var(--blue)}.lead{font-size:18px;color:#586987;max-width:640px;margin:0 0 25px}
@@ -37,7 +37,7 @@ h1{font-size:clamp(38px,4.3vw,58px);line-height:1.06;letter-spacing:-2.2px;margi
 <header class="topbar"><div class="wrap nav">
 <a class="brand" href="#"><span class="logo">▤</span><span><span class="gradient">PDF</span> Tools</span></a>
 <nav class="navlinks"><a href="#">Trang chủ</a><a href="#tools">Tất cả công cụ</a><a href="#workspace">Hướng dẫn</a><a href="#footer">Giới thiệu</a></nav>
-<a class="contact" href="mailto:bntoan2018@gmail.com">Liên hệ</a>
+<div style="display:flex;align-items:center;gap:10px"><button class="lang-toggle" id="languageToggle" type="button" aria-label="Switch language">EN</button><a class="contact" href="mailto:bntoan2018@gmail.com">Liên hệ</a></div>
 </div></header>
 <section class="hero"><div class="wrap hero-grid">
 <div class="hero-copy">
@@ -81,6 +81,52 @@ h1{font-size:clamp(38px,4.3vw,58px);line-height:1.06;letter-spacing:-2.2px;margi
 <div class="wrap"><div class="trust"><span class="trust-icon">🔒</span><div><b>Cam kết bảo mật</b><p>File được xử lý tạm thời trên máy chủ để tạo kết quả và tự động xóa sau khi gửi file hoàn tất. Vui lòng không tải lên tài liệu mật hoặc dữ liệu nhạy cảm.</p></div></div></div>
 <footer class="footer" id="footer"><div class="wrap footer-grid"><div><div class="footer-brand"><span class="gradient">PDF</span> Tools</div><small>Công cụ xử lý tài liệu PDF trực tuyến</small></div><div class="contact-info"><span>Người tạo: <b>Bùi Ngọc Toàn</b></span><span>☎ 0904016586</span><span>✉ <a href="mailto:bntoan2018@gmail.com">bntoan2018@gmail.com</a></span></div><small><a href="/privacy.html">Chính sách quyền riêng tư</a> · <a href="/terms.html">Điều khoản sử dụng</a><br>© 2026 PDF Tools. All rights reserved.</small></div></footer>
 <script>
+// Lightweight Vietnamese/English interface switch. Conversion logic remains unchanged.
+const translations = {
+'✦ Miễn phí · Nhanh chóng · Dễ sử dụng':'✦ Free · Fast · Easy to use',
+'Công cụ xử lý PDF':'PDF Tools',
+'miễn phí cho mọi người':'Free for everyone',
+'Chuyển đổi, nối và xử lý tài liệu PDF nhanh chóng. Giao diện đơn giản, dễ sử dụng trên máy tính, điện thoại và máy tính bảng.':'Convert, merge, and process PDF documents quickly. A simple interface that works on computers, phones, and tablets.',
+'Ưu tiên bảo mật':'Privacy first','File tạm thời, tự động xóa':'Temporary files, automatically deleted',
+'Xử lý nhanh':'Fast processing','Thao tác chỉ vài bước':'Just a few simple steps',
+'Mọi thiết bị':'Any device','Máy tính và điện thoại':'Computers and phones',
+'Kéo và thả file PDF của bạn vào đây':'Drag and drop your PDF file here',
+'hoặc nhấn nút bên dưới để chọn file':'or click the button below to choose a file',
+'⇧   Chọn file PDF':'⇧   Choose PDF file','Hỗ trợ PDF · Dung lượng tối đa 100 MB':'PDF supported · Maximum size 100 MB',
+'Chưa có file được chọn':'No file selected',
+'Các công cụ PDF phổ biến':'Popular PDF tools',
+'Các công cụ cần thiết để xử lý tài liệu PDF thuận tiện và miễn phí.':'Essential tools to process PDF documents easily and for free.',
+'PDF sang Word':'PDF to Word','Chuyển PDF thành Word có thể chỉnh sửa':'Convert PDF into an editable Word document',
+'Nối PDF':'Merge PDF','Gộp nhiều file PDF thành một file':'Combine multiple PDF files into one',
+'OCR PDF scan':'OCR scanned PDF','Nhận dạng văn bản từ PDF scan':'Recognize text in scanned PDFs',
+'Giữ nguyên bố cục':'Preserve layout','Tạo Word với trang dạng hình ảnh':'Create Word pages as images',
+'Sắp xếp & nối':'Reorder & merge','Đổi thứ tự file trước khi nối':'Reorder files before merging',
+'Tất cả công cụ':'All tools','Trang chủ':'Home','Hướng dẫn':'How to use','Giới thiệu':'About','Liên hệ':'Contact',
+'Chuyển PDF sang Word':'Convert PDF to Word',
+'Chọn chế độ phù hợp với tài liệu. PDF nhiều sơ đồ, hình ảnh hoặc công thức nên dùng chế độ giữ bố cục.':'Choose the mode that best fits your document. For PDFs with many diagrams, images, or formulas, use the layout-preserving mode.',
+'Kéo thả hoặc chọn một file PDF':'Drag and drop or choose a PDF file','Chọn tài liệu từ thiết bị của bạn':'Choose a document from your device','Chọn file PDF':'Choose PDF file',
+'Chưa chọn file.':'No file selected.','Vui lòng xác minh trước khi xử lý file.':'Please verify before processing the file.',
+'Word có thể chỉnh sửa':'Editable Word','Kết hợp giữ bố cục':'Hybrid layout preservation','Xóa lựa chọn':'Clear selection',
+'Đang kết nối máy chủ…':'Connecting to server…',
+'OCR phụ thuộc vào cấu hình máy chủ. Kết quả chuyển đổi cần được kiểm tra lại đối với tài liệu có bố cục phức tạp.':'OCR availability depends on server configuration. Please review conversion results for documents with complex layouts.',
+'Nối nhiều file PDF':'Merge multiple PDF files','Chọn nhiều file, kéo thả để sắp xếp thứ tự hoặc dùng nút mũi tên, sau đó nối thành một PDF.':'Select multiple files, drag and drop to reorder them or use the arrow buttons, then merge them into one PDF.',
+'Kéo thả nhiều file PDF vào đây':'Drag and drop multiple PDF files here','Hoặc nhấn để chọn nhiều file cùng lúc':'Or click to select multiple files at once','Chọn nhiều file PDF':'Choose multiple PDF files',
+'Nối và tải PDF':'Merge and download PDF','Xóa danh sách':'Clear list','Chưa có file nào được chọn.':'No files selected.',
+'Cam kết bảo mật':'Privacy commitment','File được xử lý tạm thời trên máy chủ để tạo kết quả và tự động xóa sau khi gửi file hoàn tất. Vui lòng không tải lên tài liệu mật hoặc dữ liệu nhạy cảm.':'Files are temporarily processed on the server to generate results and are automatically deleted after the download response is completed. Please do not upload confidential documents or sensitive data.',
+'Công cụ xử lý tài liệu PDF trực tuyến':'Online PDF processing tools','Người tạo:':'Created by:','Chính sách quyền riêng tư':'Privacy Policy','Điều khoản sử dụng':'Terms of Use',
+'© 2026 PDF Tools. All rights reserved.':'© 2026 PDF Tools. All rights reserved.'
+};
+function setLanguage(lang){
+ const toEnglish=lang==='en';
+ const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+ let node;while((node=walker.nextNode())){if(node.__viOriginal===undefined)node.__viOriginal=node.nodeValue;const original=node.__viOriginal;const trimmed=original.trim();if(!trimmed)continue;const translated=translations[trimmed];if(translated){const leading=original.match(/^\s*/)?.[0]||'';const trailing=original.match(/\s*$/)?.[0]||'';node.nodeValue=leading+(toEnglish?translated:trimmed)+trailing;}}
+ document.documentElement.lang=toEnglish?'en':'vi';
+ const button=document.getElementById('languageToggle');if(button){button.textContent=toEnglish?'VI':'EN';button.title=toEnglish?'Switch to Vietnamese':'Chuyển sang tiếng Anh';button.setAttribute('aria-label',button.title);}
+ try{localStorage.setItem('pdf-tools-language',toEnglish?'en':'vi')}catch(e){}
+ window.pdfToolsLanguage=toEnglish?'en':'vi';
+}
+document.getElementById('languageToggle')?.addEventListener('click',()=>setLanguage(window.pdfToolsLanguage==='en'?'vi':'en'));
+let initialLanguage='vi';try{initialLanguage=localStorage.getItem('pdf-tools-language')||'vi'}catch(e){};setLanguage(initialLanguage);
 const $=id=>document.getElementById(id);let selectedConvert=null, mergeList=[];
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.panel));});
 function status(id,msg,cls=''){const el=$(id);el.textContent=msg;el.className='status '+cls}

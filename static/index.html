@@ -114,7 +114,27 @@ const translations = {
 'Nối và tải PDF':'Merge and download PDF','Xóa danh sách':'Clear list','Chưa có file nào được chọn.':'No files selected.',
 'Cam kết bảo mật':'Privacy commitment','File được xử lý tạm thời trên máy chủ để tạo kết quả và tự động xóa sau khi gửi file hoàn tất. Vui lòng không tải lên tài liệu mật hoặc dữ liệu nhạy cảm.':'Files are temporarily processed on the server to generate results and are automatically deleted after the download response is completed. Please do not upload confidential documents or sensitive data.',
 'Công cụ xử lý tài liệu PDF trực tuyến':'Online PDF processing tools','Người tạo:':'Created by:','Chính sách quyền riêng tư':'Privacy Policy','Điều khoản sử dụng':'Terms of Use',
-'© 2026 PDF Tools. All rights reserved.':'© 2026 PDF Tools. All rights reserved.'
+'Kết hợp giữ bố cục':'Hybrid layout preservation','Word giữ nguyên hình ảnh':'Word with original page images',
+'Đang kết nối máy chủ…':'Connecting to server…','Dịch vụ trực tuyến sẵn sàng. Bộ chuyển đổi: ':'Online service ready. Converter: ',
+'OCR đã sẵn sàng.':'OCR is ready.','OCR hiện chưa được bật trên máy chủ.':'OCR is not enabled on the server.',
+'Đã xác minh. Token có thời hạn ngắn; hãy xác minh lại nếu cần.':'Verified. The token expires shortly; please verify again if needed.',
+'Xác minh đã hết hạn. Vui lòng xác minh lại.':'Verification expired. Please verify again.',
+'Vui lòng xác minh trước khi xử lý file.':'Please verify before processing the file.',
+'Đã chọn file. Sẵn sàng chuyển đổi.':'File selected. Ready to convert.','Chưa chọn file.':'No file selected.',
+'Đã xóa lựa chọn.':'Selection cleared.','Đang xử lý an toàn trên máy chủ. Với PDF dài hoặc scan, vui lòng chờ…':'Securely processing on the server. Please wait for long or scanned PDFs…',
+'Đang xử lý an toàn trên máy chủ. Với file lớn, vui lòng chờ…':'Securely processing on the server. Please wait for large files…',
+'Đang phân tích từng trang…':'Analyzing each page…','Đang OCR…':'Running OCR…','Đang tạo Word dạng ảnh…':'Creating image-based Word document…',
+'Chuyển đổi kết hợp hoàn tất. Trang bố cục phức tạp có thể được giữ dạng ảnh; chỉ các trang đơn giản được chuyển thành nội dung Word chỉnh sửa được.':'Hybrid conversion completed. Complex pages may be preserved as images; only simpler pages are converted into editable Word content.',
+'OCR hoàn tất. Hãy kiểm tra lại chữ nhận dạng và bố cục.':'OCR completed. Please review the recognized text and layout.',
+'Đã tạo Word giữ nguyên hình thức trang. Nội dung trang là ảnh, không sửa được như văn bản.':'Created a Word document preserving the page appearance. Page content is image-based and cannot be edited as text.',
+'Chuyển đổi hoàn tất. Hãy mở file Word và kiểm tra lại bảng, hình ảnh, ngắt trang.':'Conversion completed. Open the Word file and review tables, images, and page breaks.',
+'Đã chọn ':'Selected ',' file. Sắp xếp thứ tự rồi nối.':' file(s). Reorder them, then merge.','Chưa có file PDF hợp lệ.':'No valid PDF files selected.',
+'Đã nối thành công ':'Successfully merged ',' file PDF.':' PDF file(s).','Đang nối…':'Merging…','Nối và tải PDF':'Merge and download PDF',
+'Không kết nối được máy chủ. Vui lòng tải lại trang sau ít phút.':'Could not connect to the server. Please reload the page in a few minutes.',
+'Không nhận được file. Vui lòng thử lại.':'No file received. Please try again.','File không hợp lệ. Vui lòng chọn file PDF.':'Invalid file. Please choose a PDF file.',
+'File vượt quá giới hạn 100 MB.':'File exceeds the 100 MB limit.','Không chuyển đổi được:':'Conversion failed:','Không nối được file:':'Could not merge files:',
+'Đã xóa danh sách.':'List cleared.','Đã chọn file.':'File selected.','Chưa có file nào được chọn.':'No files selected.',
+'Vị trí ':'Position ','© 2026 PDF Tools. All rights reserved.':'© 2026 PDF Tools. All rights reserved.'
 };
 function setLanguage(lang){
  const toEnglish=lang==='en';
@@ -129,21 +149,22 @@ document.getElementById('languageToggle')?.addEventListener('click',()=>setLangu
 let initialLanguage='vi';try{initialLanguage=localStorage.getItem('pdf-tools-language')||'vi'}catch(e){};setLanguage(initialLanguage);
 const $=id=>document.getElementById(id);let selectedConvert=null, mergeList=[];
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.panel));});
-function status(id,msg,cls=''){const el=$(id);el.textContent=msg;el.className='status '+cls}
+function tr(msg){if(window.pdfToolsLanguage!=='en')return msg;for(const [vi,en] of Object.entries(translations)){if(msg===vi)return en;if(msg.startsWith(vi))return en+msg.slice(vi.length)}return msg}
+function status(id,msg,cls=''){const el=$(id);el.textContent=tr(msg);el.className='status '+cls}
 function size(n){return n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(2)+' MB'}
 function downloadResponse(blob,filename){const a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
 function baseName(n){return n.replace(/\.pdf$/i,'').replace(/[\\/:*?"<>|]+/g,'_')||'document'}
 async function getError(res){try{const j=await res.json();return j.error+(j.detail?'\n'+j.detail:'')}catch{return 'Lỗi máy chủ cục bộ ('+res.status+').'}}
-fetch('/api/health').then(r=>r.json()).then(j=>{status('convertStatus','Dịch vụ trực tuyến sẵn sàng. Bộ chuyển đổi: '+j.engine,'ok');document.getElementById('ocrBtn').disabled=!j.ocr_available;document.getElementById('ocrHint').textContent=j.ocr_available?'OCR đã sẵn sàng.':'OCR hiện chưa được bật trên máy chủ.'}).catch(()=>{status('convertStatus','Không kết nối được máy chủ. Vui lòng tải lại trang sau ít phút.','err')});
-function updateHeroDropInfo(message,kind='') {const el=$('heroDropInfo');if(!el)return;el.textContent=message;el.className='drop-feedback'+(kind?' '+kind:'');}
-$('convertFile').onchange=e=>{selectedConvert=e.target.files[0]||null;$('convertInfo').textContent=selectedConvert?selectedConvert.name+' · '+size(selectedConvert.size):'Chưa chọn file.';$('convertBtn').disabled=!selectedConvert;$('ocrBtn').disabled=!selectedConvert;$('visualBtn').disabled=!selectedConvert;$('hybridBtn').disabled=!selectedConvert;if(selectedConvert){updateHeroDropInfo('✓ Đã chọn: '+selectedConvert.name+' · '+size(selectedConvert.size),'success');status('convertStatus','Đã chọn file. Sẵn sàng chuyển đổi.');}else{updateHeroDropInfo('Chưa có file được chọn');status('convertStatus','Chưa chọn file.');}};
+fetch('/api/health').then(r=>r.json()).then(j=>{status('convertStatus','Dịch vụ trực tuyến sẵn sàng. Bộ chuyển đổi: '+j.engine,'ok');document.getElementById('ocrBtn').disabled=!j.ocr_available;document.getElementById('ocrHint').textContent=tr(j.ocr_available?'OCR đã sẵn sàng.':'OCR hiện chưa được bật trên máy chủ.')}).catch(()=>{status('convertStatus','Không kết nối được máy chủ. Vui lòng tải lại trang sau ít phút.','err')});
+function updateHeroDropInfo(message,kind='') {const el=$('heroDropInfo');if(!el)return;el.textContent=tr(message);el.className='drop-feedback'+(kind?' '+kind:'');}
+$('convertFile').onchange=e=>{selectedConvert=e.target.files[0]||null;$('convertInfo').textContent=selectedConvert?selectedConvert.name+' · '+size(selectedConvert.size):tr('Chưa chọn file.');$('convertBtn').disabled=!selectedConvert;$('ocrBtn').disabled=!selectedConvert;$('visualBtn').disabled=!selectedConvert;$('hybridBtn').disabled=!selectedConvert;if(selectedConvert){updateHeroDropInfo('✓ Đã chọn: '+selectedConvert.name+' · '+size(selectedConvert.size),'success');status('convertStatus','Đã chọn file. Sẵn sàng chuyển đổi.');}else{updateHeroDropInfo('Chưa có file được chọn');status('convertStatus','Chưa chọn file.');}};
 
 async function runConversion(endpoint, suffix, buttonId, startText, successText){
   if(!selectedConvert)return;
   const b=$(buttonId);
   const buttons=[$('convertBtn'),$('hybridBtn'),$('ocrBtn'),$('visualBtn')];
   buttons.forEach(x=>x.disabled=true);
-  const old=b.textContent;b.textContent=startText;
+  const old=b.textContent;b.textContent=tr(startText);
   status('convertStatus','Đang xử lý an toàn trên máy chủ. Với PDF dài hoặc scan, vui lòng chờ…');
   try{
     const fd=new FormData();fd.append('file',selectedConvert);
@@ -154,19 +175,19 @@ async function runConversion(endpoint, suffix, buttonId, startText, successText)
     downloadResponse(blob,baseName(selectedConvert.name)+suffix);
     status('convertStatus',successText+(warning?'\nLưu ý: '+warning:''),'ok');
   }catch(e){status('convertStatus','Không chuyển đổi được: '+e.message,'err')}
-  finally{b.textContent=old;buttons.forEach(x=>x.disabled=!selectedConvert)}
+  finally{b.textContent=tr(old);buttons.forEach(x=>x.disabled=!selectedConvert)}
 }
 
 $('hybridBtn').onclick=()=>runConversion('/api/convert_hybrid','_hybrid.docx','hybridBtn','Đang phân tích từng trang…','Chuyển đổi kết hợp hoàn tất. Trang bố cục phức tạp có thể được giữ dạng ảnh; chỉ các trang đơn giản được chuyển thành nội dung Word chỉnh sửa được.');
 $('ocrBtn').onclick=()=>runConversion('/api/convert_ocr','_OCR.docx','ocrBtn','Đang OCR…','OCR hoàn tất. Hãy kiểm tra lại chữ nhận dạng và bố cục.');
 $('visualBtn').onclick=()=>runConversion('/api/convert_visual','_giu_nguyen_hinh_anh.docx','visualBtn','Đang tạo Word dạng ảnh…','Đã tạo Word giữ nguyên hình thức trang. Nội dung trang là ảnh, không sửa được như văn bản.');
 
-$('clearConvert').onclick=()=>{selectedConvert=null;$('convertFile').value='';$('convertInfo').textContent='Chưa chọn file.';$('convertBtn').disabled=true;$('ocrBtn').disabled=true;$('visualBtn').disabled=true;$('hybridBtn').disabled=true;status('convertStatus','Đã xóa lựa chọn.');};
-$('convertBtn').onclick=async()=>{if(!selectedConvert)return;const b=$('convertBtn');b.disabled=true;b.textContent='Đang chuyển đổi…';status('convertStatus','Đang xử lý an toàn trên máy chủ. Với file lớn, vui lòng chờ…');try{const fd=new FormData();fd.append('file',selectedConvert);fd.append('cf-turnstile-response',getCaptchaToken());const r=await fetch('/api/convert',{method:'POST',body:fd});resetCaptcha();if(!r.ok)throw new Error(await getError(r));downloadResponse(await r.blob(),baseName(selectedConvert.name)+'.docx');status('convertStatus','Chuyển đổi hoàn tất. Hãy mở file Word và kiểm tra lại bảng, hình ảnh, ngắt trang.','ok')}catch(e){status('convertStatus','Không chuyển đổi được: '+e.message,'err')}finally{b.disabled=!selectedConvert;b.textContent='Chuyển sang Word (.docx)'}};
-function renderFiles(){const ul=$('fileList');ul.innerHTML='';mergeList.forEach((f,i)=>{const li=document.createElement('li');li.className='file';const nm=document.createElement('div');nm.className='name';nm.textContent=f.name;const sm=document.createElement('small');sm.textContent=size(f.size)+' · Vị trí '+(i+1);nm.appendChild(sm);const mv=document.createElement('div');mv.className='move';[['↑',i===0,()=>{[mergeList[i-1],mergeList[i]]=[mergeList[i],mergeList[i-1]];renderFiles()}],['↓',i===mergeList.length-1,()=>{[mergeList[i+1],mergeList[i]]=[mergeList[i],mergeList[i+1]];renderFiles()}],['×',false,()=>{mergeList.splice(i,1);renderFiles()}]].forEach(([txt,disabled,fn])=>{const b=document.createElement('button');b.textContent=txt;b.disabled=disabled;b.onclick=fn;mv.appendChild(b)});li.append(nm,mv);ul.appendChild(li)});$('mergeBtn').disabled=mergeList.length<2}
+$('clearConvert').onclick=()=>{selectedConvert=null;$('convertFile').value='';$('convertInfo').textContent=tr('Chưa chọn file.');$('convertBtn').disabled=true;$('ocrBtn').disabled=true;$('visualBtn').disabled=true;$('hybridBtn').disabled=true;status('convertStatus','Đã xóa lựa chọn.');};
+$('convertBtn').onclick=async()=>{if(!selectedConvert)return;const b=$('convertBtn');b.disabled=true;b.textContent=tr('Đang chuyển đổi…');status('convertStatus','Đang xử lý an toàn trên máy chủ. Với file lớn, vui lòng chờ…');try{const fd=new FormData();fd.append('file',selectedConvert);fd.append('cf-turnstile-response',getCaptchaToken());const r=await fetch('/api/convert',{method:'POST',body:fd});resetCaptcha();if(!r.ok)throw new Error(await getError(r));downloadResponse(await r.blob(),baseName(selectedConvert.name)+'.docx');status('convertStatus','Chuyển đổi hoàn tất. Hãy mở file Word và kiểm tra lại bảng, hình ảnh, ngắt trang.','ok')}catch(e){status('convertStatus','Không chuyển đổi được: '+e.message,'err')}finally{b.disabled=!selectedConvert;b.textContent=tr('Chuyển sang Word (.docx)')}};
+function renderFiles(){const ul=$('fileList');ul.innerHTML='';mergeList.forEach((f,i)=>{const li=document.createElement('li');li.className='file';const nm=document.createElement('div');nm.className='name';nm.textContent=f.name;const sm=document.createElement('small');sm.textContent=size(f.size)+' · '+tr('Vị trí ')+(i+1);nm.appendChild(sm);const mv=document.createElement('div');mv.className='move';[['↑',i===0,()=>{[mergeList[i-1],mergeList[i]]=[mergeList[i],mergeList[i-1]];renderFiles()}],['↓',i===mergeList.length-1,()=>{[mergeList[i+1],mergeList[i]]=[mergeList[i],mergeList[i+1]];renderFiles()}],['×',false,()=>{mergeList.splice(i,1);renderFiles()}]].forEach(([txt,disabled,fn])=>{const b=document.createElement('button');b.textContent=txt;b.disabled=disabled;b.onclick=fn;mv.appendChild(b)});li.append(nm,mv);ul.appendChild(li)});$('mergeBtn').disabled=mergeList.length<2}
 $('mergeFiles').onchange=e=>{Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.pdf')).forEach(f=>{if(!mergeList.some(x=>x.name===f.name&&x.size===f.size&&x.lastModified===f.lastModified))mergeList.push(f)});e.target.value='';renderFiles();status('mergeStatus',mergeList.length?'Đã chọn '+mergeList.length+' file. Sắp xếp thứ tự rồi nối.':'Chưa có file PDF hợp lệ.')};
 $('clearMerge').onclick=()=>{mergeList=[];renderFiles();status('mergeStatus','Đã xóa danh sách.')};
-$('mergeBtn').onclick=async()=>{if(mergeList.length<2)return;const b=$('mergeBtn');b.disabled=true;b.textContent='Đang nối…';try{const fd=new FormData();mergeList.forEach(f=>fd.append('files',f));fd.append('cf-turnstile-response',getCaptchaToken());const r=await fetch('/api/merge',{method:'POST',body:fd});resetCaptcha();if(!r.ok)throw new Error(await getError(r));downloadResponse(await r.blob(),'PDF_merged.pdf');status('mergeStatus','Đã nối thành công '+mergeList.length+' file PDF.','ok')}catch(e){status('mergeStatus','Không nối được file: '+e.message,'err')}finally{b.disabled=mergeList.length<2;b.textContent='Nối và tải PDF'}};
+$('mergeBtn').onclick=async()=>{if(mergeList.length<2)return;const b=$('mergeBtn');b.disabled=true;b.textContent=tr('Đang nối…');try{const fd=new FormData();mergeList.forEach(f=>fd.append('files',f));fd.append('cf-turnstile-response',getCaptchaToken());const r=await fetch('/api/merge',{method:'POST',body:fd});resetCaptcha();if(!r.ok)throw new Error(await getError(r));downloadResponse(await r.blob(),'PDF_merged.pdf');status('mergeStatus','Đã nối thành công '+mergeList.length+' file PDF.','ok')}catch(e){status('mergeStatus','Không nối được file: '+e.message,'err')}finally{b.disabled=mergeList.length<2;b.textContent=tr('Nối và tải PDF')}};
 
 // Hero and workspace drag-and-drop support.
 function setupDrop(id, onFiles) {
@@ -181,14 +202,14 @@ function chooseConvert(files){
  if(!f.name.toLowerCase().endsWith('.pdf')&&f.type!=='application/pdf'){
   $('convertFile').value='';selectedConvert=null;
   ['convertBtn','hybridBtn','ocrBtn','visualBtn'].forEach(id=>$(id).disabled=true);
-  $('convertInfo').textContent='Chưa chọn file.';
+  $('convertInfo').textContent=tr('Chưa chọn file.');
   updateHeroDropInfo('✕ File không hợp lệ. Vui lòng chọn file PDF.','error');
   status('convertStatus','File không hợp lệ. Vui lòng chọn file PDF.','err');return;
  }
  if(f.size>100*1024*1024){
   $('convertFile').value='';selectedConvert=null;
   ['convertBtn','hybridBtn','ocrBtn','visualBtn'].forEach(id=>$(id).disabled=true);
-  $('convertInfo').textContent='Chưa chọn file.';
+  $('convertInfo').textContent=tr('Chưa chọn file.');
   updateHeroDropInfo('✕ File vượt quá giới hạn 100 MB.','error');
   status('convertStatus','File vượt quá giới hạn 100 MB.','err');return;
  }
@@ -204,14 +225,14 @@ function resetCaptcha(){turnstileToken='';if(window.turnstile){['turnstile-widge
 async function initCaptcha(){
  try{
   const cfg=await fetch('/api/config').then(r=>r.json());
-  if(!cfg.turnstile_site_key){$('captchaHint').textContent='CAPTCHA chưa cấu hình trên máy chủ; chức năng xử lý đang được khóa để bảo vệ website.';return;}
+  if(!cfg.turnstile_site_key){$('captchaHint').textContent=tr('CAPTCHA chưa cấu hình trên máy chủ; chức năng xử lý đang được khóa để bảo vệ website.');return;}
   const render=()=>{
    if(!window.turnstile)return setTimeout(render,250);
    ['turnstile-widget','turnstile-widget-merge'].forEach(id=>{
-    const el=$(id);if(el&&!el.dataset.rendered){window.turnstile.render(el,{sitekey:cfg.turnstile_site_key,callback:t=>{turnstileToken=t;$('captchaHint').textContent='Đã xác minh. Token có thời hạn ngắn; hãy xác minh lại nếu cần.';},'expired-callback':()=>{turnstileToken='';$('captchaHint').textContent='Xác minh đã hết hạn. Vui lòng xác minh lại.';},'error-callback':()=>{turnstileToken='';}});el.dataset.rendered='1';}
+    const el=$(id);if(el&&!el.dataset.rendered){window.turnstile.render(el,{sitekey:cfg.turnstile_site_key,callback:t=>{turnstileToken=t;$('captchaHint').textContent=tr('Đã xác minh. Token có thời hạn ngắn; hãy xác minh lại nếu cần.');},'expired-callback':()=>{turnstileToken='';$('captchaHint').textContent=tr('Xác minh đã hết hạn. Vui lòng xác minh lại.');},'error-callback':()=>{turnstileToken='';}});el.dataset.rendered='1';}
    });
   };render();
- }catch(e){$('captchaHint').textContent='Không tải được CAPTCHA. Vui lòng tải lại trang.';}
+ }catch(e){$('captchaHint').textContent=tr('Không tải được CAPTCHA. Vui lòng tải lại trang.');}
 }
 initCaptcha();
 </script></body></html>

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: pdf-tools-public
+    name: pdf-tools-bnt
     runtime: docker
     plan: starter
     dockerfilePath: ./Dockerfile
